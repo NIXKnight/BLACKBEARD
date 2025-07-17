@@ -5,3 +5,4 @@ ansible/external-roles/*
 ansible/.ansible_vault_password
 *.retry
 *debug*
+.envrc
