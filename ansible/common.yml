@@ -1,0 +1,26 @@
+---
+- name: Add BLACKBEARD Host
+  hosts: localhost
+  gather_facts: false
+  become: false
+  vars_files:
+    - "../../Home-Ops-Internal/ansible/BLACKBEARD/BLACKBEARD.yml"
+  tasks:
+    - name: Add BLACKBEARD Hosts
+      ansible.builtin.add_host:
+        name: "{{ BLACKBEARD_HOST }}"
+        group: "BLACKBEARD"
+        ansible_user: "{{ BLACKBEARD_SSH_USER }}"
+        ansible_ssh_private_key_file: "{{ BLACKBEARD_SSH_USER_PRIVATE_KEY_FILE }}"
+
+- name: Run Common Roles
+  hosts: BLACKBEARD
+  gather_facts: yes
+  become: True
+  collections:
+    - nixknight.general
+  vars_files:
+    - "{{ playbook_dir }}/extravars/common.yml"
+  roles:
+    - linux-common
+    - motd
